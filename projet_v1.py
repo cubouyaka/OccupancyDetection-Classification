@@ -2,7 +2,6 @@
 
 import math
 import random
-from sklearn.model_selection import KFold
 
 def read_data(filename):
 	"""Reads a occupancy dataset, delete the first line.
@@ -22,17 +21,30 @@ def read_data(filename):
 
 	for line in file.readlines()[1:]:
 		split = line.split(',')
-		xi = [float(split[i]) for i in range (2,6)]
-		Y.append(True if (int(split[6].replace('\n','')) == 1) else False)
+		xi = [float(split[i]) for i in range (2,7)]
+		Y.append(True if (int(split[7].replace('\n','')) == 1) else False)
 		X.append(xi)
 	file.close()
 
 	return X,Y
 
-# print(read_data('test'))
+X,Y = read_data('datatraining.txt')
 
 
 def split_lines(input, seed, output1, output2):
+	"""Distributes the lines of 'input' to 'output1' and 'output2' pseudo-randomly.
+
+  	The output files should be approximately balanced (50/50 chance for each line
+  	to go either to output1 or output2).
+    
+  	Args:
+    	input: a string, the name of the input file.
+    	seed: an integer, the seed of the pseudo-random generator used. The split
+        	should be different with different seeds. Conversely, using the same
+        	seed and the same input should yield exactly the same outputs.
+    	output1: a string, the name of the first output file.
+    	output2: a string, the name of the second output file.
+  	"""
 	random.seed(seed)
 	file = open(input,'r')
 	f_out1 = open(output1,'w')
@@ -46,3 +58,5 @@ def split_lines(input, seed, output1, output2):
 	file.close()
 	f_out1.close()
 	f_out2.close()
+
+
