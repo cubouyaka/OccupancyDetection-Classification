@@ -25,8 +25,8 @@ def read_data(filename):
 
 	for line in file.readlines():
 		split = line.split(',')
-		# xi = [float(split[i]) for i in range (2,7)]
-		xi = [float(split[3])]
+		xi = [float(split[i]) for i in range (2,7)]
+		# xi = [float(split[2])]
 		Y.append(True if (int(split[7].replace('\n','')) == 1) else False)
 		X.append(xi)
 	file.close()
