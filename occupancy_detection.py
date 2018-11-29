@@ -25,7 +25,8 @@ def read_data(filename):
 
 	for line in file.readlines():
 		split = line.split(',')
-		xi = [float(split[i]) for i in range (2,7)]
+		# xi = [float(split[i]) for i in range (2,7)]
+		xi = [float(split[3])]
 		Y.append(True if (int(split[7].replace('\n','')) == 1) else False)
 		X.append(xi)
 	file.close()
@@ -205,10 +206,6 @@ def eval_occupancy_classifier(train_x, train_y, test_x, test_y, classifier, dist
 
 	return 1.0 - (nb_success / float(n))
 
-split_lines('dt.txt',-1,'train','test')
-(train_x,train_y) = read_data('train')
-(test_x,test_y) = read_data('test')
-
 def sampled_range(mini, maxi, num):
 	"""Calcul a sample of 'num' values "well distributed" between 'mini' and 'max'
 	Args:
@@ -239,7 +236,7 @@ def find_best_k(train_x, train_y, dist_function):
 	"""
 	fold = 10
 	n = len(train_x)
-	sample = sampled_range(1,n/2,fold)
+	sample = sampled_range(1,n/10,fold)
 	n_sample = len(sample)
 
 	kf = KFold(fold)
@@ -260,6 +257,25 @@ def find_best_k(train_x, train_y, dist_function):
 
 """ MAIN """
 
+split_lines('dt.txt',-1,'train','test')
+(train_x,train_y) = read_data('train')
+(test_x,test_y) = read_data('test')
+
 best_k = find_best_k(train_x, train_y, simple_distance)
 print("The best k is : "+str(best_k))
-print("Evaluation of the Occupancy Detector with the best k ("+str(k)+") is : "+str(eval_occupancy_classifier(train_x, train_y, test_x, test_y, is_occupied_knn, simple_distance, best_k)))
+print("Evaluation of the Occupancy Detector with the best k ("+str(best_k)+") is : "+str(eval_occupancy_classifier(train_x, train_y, test_x, test_y, is_occupied_knn, simple_distance, best_k)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
