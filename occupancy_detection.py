@@ -1,6 +1,6 @@
 # coding=utf-8
 """
-	Machine Learning Project - Occupancy Detection [Classification]
+	Machine Learning Project - Occupancy Detection [Classification] using K Nearest Neigbors
 	Fontaine Victor - M2 Informatique Paris Diderot - 2018
 """
 
