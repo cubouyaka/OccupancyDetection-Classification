@@ -27,7 +27,7 @@ def read_data(filename):
 	for line in file.readlines():
 		split = line.split(',')
 		xi = [float(split[i]) for i in range (2,7)]
-		# xi = [float(split[2])]
+		#xi = [float(split[3])]
 		Y.append(True if (int(split[7].replace('\n','')) == 1) else False)
 		X.append(xi)
 	file.close()
@@ -37,17 +37,16 @@ def read_data(filename):
 def split_lines(input, seed, output1, output2):
 	"""Distributes the lines of 'input' to 'output1' and 'output2' pseudo-randomly.
 
-  	The output files should be approximately balanced (50/50 chance for each line
-  	to go either to output1 or output2).
-    
-  	Args:
-    	input: a string, the name of the input file.
-    	seed: an integer, the seed of the pseudo-random generator used. The split
-        	should be different with different seeds. Conversely, using the same
-        	seed and the same input should yield exactly the same outputs.
-    	output1: a string, the name of the first output file.
-    	output2: a string, the name of the second output file.
-  	"""
+	The output files should be approximately balanced (50/50 chance for each line
+	to go either to output1 or output2).
+	Args:
+		input: a string, the name of the input file.
+		seed: an integer, the seed of the pseudo-random generator used. The split
+			should be different with different seeds. Conversely, using the same
+		seed and the same input should yield exactly the same outputs.
+		output1: a string, the name of the first output file.
+		output2: a string, the name of the second output file.
+	"""
 	if seed == -1:
 		random.seed()
 	else:
@@ -57,7 +56,7 @@ def split_lines(input, seed, output1, output2):
 	f_out2 = open(output2,'w')
 
 	for line in file.readlines():
-		if(random.random() < 0.5):
+		if(random.random() < 1.0/3.0):
 			f_out1.write(line)
 		else:
 			f_out2.write(line)
@@ -75,12 +74,18 @@ def eval_SVM(predictions, test_y):
 
 """ MAIN """
 
-split_lines('dt.txt',-1,'train','test')
+split_lines('dataset_clean.txt',-1,'train','test')
 (train_x,train_y) = read_data('train')
 (test_x,test_y) = read_data('test')
 
-model = SVC(C = 1, kernel = 'linear')
+model = SVC(C = 1)
 model.fit(train_x,train_y)
 predictions = model.predict(test_x)
 
-print(eval_SVM(predictions, test_y))
+print("SVC - Radial Basis Function : "+str(eval_SVM(predictions, test_y)))
+
+model = SVC(C = 1, kernel='linear')
+model.fit(train_x,train_y)
+predictions = model.predict(test_x)
+
+print("SVC - Linear Function : "+str(eval_SVM(predictions, test_y)))

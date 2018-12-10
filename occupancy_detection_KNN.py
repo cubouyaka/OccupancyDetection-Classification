@@ -36,20 +36,20 @@ def read_data(filename):
 def split_lines(input, seed, output1, output2):
 	"""Distributes the lines of 'input' to 'output1' and 'output2' pseudo-randomly.
 
-  	The output files should be approximately balanced (50/50 chance for each line
-  	to go either to output1 or output2).
-    
-  	Args:
-    	input: a string, the name of the input file.
-    	seed: an integer, the seed of the pseudo-random generator used. The split
-        	should be different with different seeds. Conversely, using the same
-        	seed and the same input should yield exactly the same outputs.
-    	output1: a string, the name of the first output file.
-    	output2: a string, the name of the second output file.
-  	"""
-  	if seed == -1:
-  		random.seed()
-  	else:
+	The output files should be approximately balanced (50/50 chance for each line
+	to go either to output1 or output2).
+
+	Args:
+		input: a string, the name of the input file.
+		seed: an integer, the seed of the pseudo-random generator used. The split
+			should be different with different seeds. Conversely, using the same
+			seed and the same input should yield exactly the same outputs.
+		output1: a string, the name of the first output file.
+		output2: a string, the name of the second output file.
+	"""
+	if seed == -1:
+		random.seed()
+	else:
 		random.seed(seed)
 	file = open(input,'r')
 	f_out1 = open(output1,'w')
@@ -257,7 +257,7 @@ def find_best_k(train_x, train_y, dist_function):
 
 """ MAIN """
 
-split_lines('dt.txt',-1,'train','test')
+split_lines('dataset_clean.txt',-1,'train','test')
 (train_x,train_y) = read_data('train')
 (test_x,test_y) = read_data('test')
 
