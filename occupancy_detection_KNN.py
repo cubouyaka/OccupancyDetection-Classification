@@ -47,6 +47,7 @@ def split_lines(input, seed, output1, output2):
 		output1: a string, the name of the first output file.
 		output2: a string, the name of the second output file.
 	"""
+	proba = 0.5
 	if seed == -1:
 		random.seed()
 	else:
@@ -56,7 +57,7 @@ def split_lines(input, seed, output1, output2):
 	f_out2 = open(output2,'w')
 
 	for line in file.readlines():
-		if(random.random() < 0.5):
+		if(random.random() < proba):
 			f_out1.write(line)
 		else:
 			f_out2.write(line)
